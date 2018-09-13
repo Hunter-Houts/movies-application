@@ -9,27 +9,51 @@ sayHello('World');
 /**
  * require style imports
  */
-const {getMovies} = require('./api.js');
+const {getMovies, addMovies, removeMovies} = require('./api.js');
 $("h1").text("Loading...");
 $("p").remove();
-$(document).ready(getMovies().then((movies) => {
+function loadMovies(){
+    getMovies().then((movies) => {
     $("h1").remove();
+    $("form").removeClass("d-none");
     let html = `<table class="table">`
     html += `<thead><tr><th scope="col">ID</th><th scope="col">Name</th><th scope="col">Rating</th></tr></thead>`
     movies.forEach(({title, rating, id}) => {
         html +=  `<tr>`;
-        html += `<th scope="row">${id}</th>`;
+        html += `<th scope="row" id="id">${id}</th>`;
         html += `<td>${title}</td>`;
-        html += `<td>Rating: ${rating}</td>`;
+        html += `<td>Rating: ${rating} <button id=${id}>Remove</button></td> `;
         html += '</tr>';
     });
-    html += `</table>`;
-    return $("#table").html(html);
+    // html += `</table>`;
+    $("#table").html(html);
+    $("td button").click(function(e){
+                e.preventDefault()
+                let targ = e.target;
+                let id = targ.id;
+                console.log(id);
+                console.log(targ);
+
+                removeMovies(parseInt(id));
+                $("#table").html(loadMovies());
+            })
+
+}
+
+)}
+$(document).ready(loadMovies());
+
+$("#addMovie").click(function(e){
+    e.preventDefault();
+    let data = {
+        "title": $("#movie").val(),
+        "rating": $("#Rating").val()
+    }
+    console.log(data);
+  addMovies(data);
+  loadMovies();
+})
 
 
-}).catch((error) => {
-    alert('Oh no! Something went wrong.\nCheck the console for details.')
-    console.log(error);
-}));
 
 
