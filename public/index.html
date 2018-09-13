@@ -12,7 +12,7 @@
         <h1>Hello There!</h1>
         <p>To get started, edit <code>src/index.js</code>.</p>
         <div id="table"></div>
-        <form method="POST" action="/api/movies" class="d-none">
+        <form id="post" method="POST" action="/api/movies" class="d-none">
             <div class="form-group">
                 <label for="movie">Movie</label><br>
             <input name="title" class="form-control" type="text" placeholder="Movie Name" id="movie">
@@ -28,6 +28,22 @@
             </select>
             </div><br>
             <button type="submit" id="addMovie">Submit</button>
+        </form>
+        <br>
+        <form method="PUT" id="edit" action="/api/movies" class="d-none">
+            <div class="form-group">
+                <label for="movieId">ID</label>
+                <input class="form-control" type="text" id="movieId" name="id">
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="ratingChange">Rating</label>
+                <input type="text" id="ratingChange" class="form-control" name="rating">
+            </div>
+            <button id="change">Change</button>
         </form>
     </div>
     <!--Bootstrap-->

@@ -15,8 +15,8 @@ module.exports = {
       method: "DELETE"
     }).then(response => { return console.log("Success: " +  JSON.stringify(response))}).catch(error => console.log("Error: " + error))
     },
-    editMovie: (data) => {
-        return fetch('/api/movies', {
+    editMovie: (data, id) => {
+        return fetch(`/api/movies/${id}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(data)

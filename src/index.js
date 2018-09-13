@@ -9,13 +9,14 @@ sayHello('World');
 /**
  * require style imports
  */
-const {getMovies, addMovies, removeMovies} = require('./api.js');
+const {getMovies, addMovies, removeMovies, editMovie} = require('./api.js');
 $("h1").text("Loading...");
 $("p").remove();
 function loadMovies(){
     getMovies().then((movies) => {
     $("h1").remove();
-    $("form").removeClass("d-none");
+    $("#post").removeClass("d-none");
+    $("#edit").removeClass("d-none");
     let html = `<table class="table">`
     html += `<thead><tr><th scope="col">ID</th><th scope="col">Name</th><th scope="col">Rating</th></tr></thead>`
     movies.forEach(({title, rating, id}) => {
@@ -53,6 +54,18 @@ $("#addMovie").click(function(e){
   addMovies(data);
   loadMovies();
 })
+$("#change").click(function(e){
+    e.preventDefault();
+    let id = $("#movieId").val();
+    console.log(id);
+    let data = {
+        "title": $("#name").val(),
+        "rating": $("#ratingChange").val()
+    };
+    console.log(data)
+    editMovie(data, parseInt(id));
+    loadMovies();
+});
 
 
 
